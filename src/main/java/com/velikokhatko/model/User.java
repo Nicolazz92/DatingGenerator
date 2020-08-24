@@ -40,7 +40,7 @@ public class User extends BaseEntity {
         return bodyType;
     }
 
-    @OneToMany(mappedBy = "personOne")
+    @ManyToMany(mappedBy = "persons")
     public Set<Match> getMatches() {
         return matches;
     }

@@ -3,10 +3,7 @@ create sequence hibernate_sequence start with 1000 increment by 1;
 CREATE TABLE MATCH
 (
     id                 LONG PRIMARY KEY NOT NULL,
---     person1id          LONG             NOT NULL,
---     person2id          LONG             NOT NULL,
     creation_date_time TIMESTAMP
---     UNIQUE (person1id, person2id)
 );
 
 CREATE TABLE USER
@@ -22,7 +19,6 @@ CREATE TABLE USER
 
 CREATE TABLE PERSON_JOIN_TABLE
 (
-    PERSON_ONE_ID LONG,
-    PERSON_TWO_ID LONG,
-    MATCH_ID      LONG
+    PERSON_ID LONG,
+    MATCH_ID  LONG
 )
