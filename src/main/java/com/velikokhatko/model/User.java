@@ -1,7 +1,7 @@
 package com.velikokhatko.model;
 
 import com.velikokhatko.model.enums.BodyType;
-import com.velikokhatko.model.enums.Sex;
+import com.velikokhatko.model.enums.Gender;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,16 +17,18 @@ import java.util.Set;
 public class User extends BaseEntity {
 
     private String name;
-    private Sex sex;
+    private Gender gender;
     private Byte[] image;
+    private Integer age;
     private BodyType bodyType;
     private String description;
     private Double height;
+    private SearchFilter searchFilter;
     private Set<Match> matches = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
-    public Sex getSex() {
-        return sex;
+    public Gender getGender() {
+        return gender;
     }
 
     @Lob
@@ -38,6 +40,12 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     public BodyType getBodyType() {
         return bodyType;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "search_filter_id")
+    public SearchFilter getSearchFilter() {
+        return searchFilter;
     }
 
     @ManyToMany(mappedBy = "persons")

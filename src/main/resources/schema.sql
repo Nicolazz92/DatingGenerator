@@ -8,17 +8,37 @@ CREATE TABLE MATCH
 
 CREATE TABLE USER
 (
-    id          LONG PRIMARY KEY NOT NULL,
-    name        VARCHAR(255),
-    sex         VARCHAR(10),
-    image       BLOB,
-    body_type   VARCHAR(10),
-    description VARCHAR(255),
-    height      DOUBLE
+    id               LONG PRIMARY KEY NOT NULL,
+    name             VARCHAR(255),
+    gender           VARCHAR(10),
+    image            BLOB,
+    age              INTEGER,
+    body_type        VARCHAR(10),
+    description      VARCHAR(255),
+    height           DOUBLE,
+    search_filter_id LONG             NOT NULL
 );
 
 CREATE TABLE PERSON_JOIN_TABLE
 (
     PERSON_ID LONG,
-    MATCH_ID  LONG
+    MATCH_ID  LONG,
+    primary key (PERSON_ID, MATCH_ID)
+);
+
+CREATE TABLE SEARCH_FILTER
+(
+    id         LONG PRIMARY KEY NOT NULL,
+    gender     VARCHAR(10),
+    age_min    INTEGER,
+    age_max    INTEGER,
+    height_min DOUBLE,
+    height_max DOUBLE,
+    body_types VARCHAR(255)
+);
+
+CREATE TABLE search_filter_body_types
+(
+    search_filter_id LONG,
+    body_types VARCHAR(10)
 )
