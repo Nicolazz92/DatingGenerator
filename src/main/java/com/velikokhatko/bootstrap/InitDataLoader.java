@@ -4,7 +4,6 @@ import com.velikokhatko.model.SearchFilter;
 import com.velikokhatko.model.User;
 import com.velikokhatko.model.enums.BodyType;
 import com.velikokhatko.model.enums.Gender;
-import com.velikokhatko.repository.SearchFilterRepository;
 import com.velikokhatko.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -14,14 +13,12 @@ import java.util.HashSet;
 
 @Component
 @Transactional
-public class BodyTypesLoader implements CommandLineRunner {
+public class InitDataLoader implements CommandLineRunner {
 
     private final UserRepository userRepository;
-    private final SearchFilterRepository searchFilterRepository;
 
-    public BodyTypesLoader(UserRepository userRepository, SearchFilterRepository searchFilterRepository) {
+    public InitDataLoader(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.searchFilterRepository = searchFilterRepository;
     }
 
     @Override

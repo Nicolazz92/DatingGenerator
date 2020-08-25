@@ -17,8 +17,6 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private SearchFilterRepository searchFilterRepository;
 
     @Test
     public void saveTest() {

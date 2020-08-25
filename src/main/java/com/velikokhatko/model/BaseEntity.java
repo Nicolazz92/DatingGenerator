@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @MappedSuperclass
+@Access(AccessType.PROPERTY)
 public class BaseEntity {
 
     private Long id;
