@@ -27,7 +27,8 @@ public class SearchFilter extends BaseEntity {
         return gender;
     }
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = BodyType.class)
+    @CollectionTable(name = "BODY_TYPES", joinColumns = {@JoinColumn(name = "id")})
     @Enumerated(EnumType.STRING)
     public Set<BodyType> getBodyTypes() {
         return bodyTypes;

@@ -37,8 +37,9 @@ CREATE TABLE SEARCH_FILTER
     body_types VARCHAR(255)
 );
 
-CREATE TABLE search_filter_body_types
+CREATE TABLE BODY_TYPES
 (
-    search_filter_id LONG,
-    body_types VARCHAR(10)
+    id         LONG NOT NULL,
+    body_types VARCHAR(10),
+    PRIMARY KEY (id, body_types)
 )

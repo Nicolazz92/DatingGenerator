@@ -42,7 +42,7 @@ public class User extends BaseEntity {
         return bodyType;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "search_filter_id")
     public SearchFilter getSearchFilter() {
         return searchFilter;
