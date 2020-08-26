@@ -3,6 +3,7 @@ package com.velikokhatko.model;
 import com.velikokhatko.model.enums.BodyType;
 import com.velikokhatko.model.enums.Gender;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ public class User extends BaseEntity {
 
     private String name;
     private Gender gender;
-    private Byte[] image;
+    private MultipartFile photo;
     private Integer age;
     private BodyType bodyType;
     private String description;
@@ -33,8 +34,8 @@ public class User extends BaseEntity {
 
     @Lob
     @Column(columnDefinition = "BLOB")
-    public Byte[] getImage() {
-        return image;
+    public MultipartFile getPhoto() {
+        return photo;
     }
 
     @Enumerated(EnumType.STRING)

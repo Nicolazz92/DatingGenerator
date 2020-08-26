@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/new")
-    public String processCreateUserForm(UserDTO userDTO) {
+    public String processCreateUserForm(@ModelAttribute UserDTO userDTO) {
         if (userDTO.getId() != null) {
             logger.error("new User cannot has populated id: id={}", userDTO.getId());
             return "redirect:/users/" + userDTO.getId();
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/edit")
-    public String processCreateOrUpdateUserForm(UserDTO userDTO, @PathVariable Long userId) {
+    public String processCreateOrUpdateUserForm(@ModelAttribute UserDTO userDTO, @PathVariable Long userId) {
         userDTO.setId(userId);
         userService.createOrUpdate(userDTO);
         return "redirect:/users/" + userId;

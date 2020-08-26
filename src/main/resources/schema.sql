@@ -11,7 +11,7 @@ CREATE TABLE USER
     id               LONG PRIMARY KEY NOT NULL,
     name             VARCHAR(255),
     gender           VARCHAR(10),
-    image            BLOB,
+    photo            BLOB,
     age              INTEGER,
     body_type        VARCHAR(10),
     description      VARCHAR(255),
