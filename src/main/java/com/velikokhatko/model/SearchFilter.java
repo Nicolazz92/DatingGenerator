@@ -18,8 +18,8 @@ public class SearchFilter extends BaseEntity {
     private Gender gender;
     private Integer ageMin;
     private Integer ageMax;
-    private Double heightMin;
-    private Double heightMax;
+    private Integer heightMin;
+    private Integer heightMax;
     private Set<BodyType> bodyTypes = new HashSet<>();
 
     @Enumerated(EnumType.STRING)

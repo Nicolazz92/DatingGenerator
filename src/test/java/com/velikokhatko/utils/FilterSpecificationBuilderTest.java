@@ -32,8 +32,8 @@ class FilterSpecificationBuilderTest {
                 .gender(Gender.MALE)
                 .ageMin(29)
                 .ageMax(31)
-                .heightMin(170D)
-                .heightMax(190D)
+                .heightMin(170)
+                .heightMax(190)
                 .bodyTypes(Set.of(BodyType.AVERAGE, BodyType.ATHLETIC, BodyType.THIN))
                 .build();
 
@@ -42,7 +42,7 @@ class FilterSpecificationBuilderTest {
                 .bodyType(BodyType.AVERAGE)
                 .description("test desc")
                 .gender(Gender.MALE)
-                .height(180D)
+                .height(180)
                 .name("Peter")
                 .searchFilter(peterSearchFilter)
                 .build();

@@ -19,5 +19,5 @@ public class UserDTO {
     private Integer age;
     private BodyType bodyType;
     private String description;
-    private Double height;
+    private Integer height;
 }

@@ -48,7 +48,7 @@ public class FilterSpecificationBuilder {
         }
     }
 
-    private static Predicate buildHeightMinPredicate(Root<User> root, CriteriaBuilder criteriaBuilder, Double heightMin) {
+    private static Predicate buildHeightMinPredicate(Root<User> root, CriteriaBuilder criteriaBuilder, Integer heightMin) {
         if (heightMin == null) {
             return criteriaBuilder.and();
         } else {
@@ -56,7 +56,7 @@ public class FilterSpecificationBuilder {
         }
     }
 
-    private static Predicate buildHeightMaxPredicate(Root<User> root, CriteriaBuilder criteriaBuilder, Double heightMax) {
+    private static Predicate buildHeightMaxPredicate(Root<User> root, CriteriaBuilder criteriaBuilder, Integer heightMax) {
         if (heightMax == null) {
             return criteriaBuilder.and();
         } else {

@@ -3,7 +3,6 @@ package com.velikokhatko.services.converters;
 import com.velikokhatko.model.User;
 import com.velikokhatko.repository.UserRepository;
 import com.velikokhatko.view.dto.UserDTO;
-import org.modelmapper.ModelMapper;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,7 +22,6 @@ public class UserDTOToUserConverter implements Converter<UserDTO, User> {
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public User convert(UserDTO dto) {
-        ModelMapper modelMapper = new ModelMapper();
         User user = new User();
         if (dto.getId() != null) {
             Optional<User> byId = userRepository.findById(dto.getId());
@@ -35,7 +33,7 @@ public class UserDTOToUserConverter implements Converter<UserDTO, User> {
         user.setGender(dto.getGender());
 //        user.setImage(dto.getImage());
         user.setAge(dto.getAge());
-//        user.setBodyType(dto.getBodyType());
+        user.setBodyType(dto.getBodyType());
         user.setDescription(dto.getDescription());
         user.setHeight(dto.getHeight());
         return user;

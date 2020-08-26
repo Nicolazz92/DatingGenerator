@@ -15,7 +15,7 @@ CREATE TABLE USER
     age              INTEGER,
     body_type        VARCHAR(10),
     description      VARCHAR(255),
-    height           DOUBLE,
+    height           INTEGER,
     search_filter_id LONG             NOT NULL
 );
 
@@ -32,8 +32,8 @@ CREATE TABLE SEARCH_FILTER
     gender     VARCHAR(10),
     age_min    INTEGER,
     age_max    INTEGER,
-    height_min DOUBLE,
-    height_max DOUBLE,
+    height_min INTEGER,
+    height_max INTEGER,
     body_types VARCHAR(255)
 );
 

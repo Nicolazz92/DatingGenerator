@@ -38,7 +38,7 @@ public class InitDataLoader implements CommandLineRunner {
                 .bodyType(BodyType.AVERAGE)
                 .description("test desc")
                 .gender(Gender.MALE)
-                .height(180D)
+                .height(180)
                 .name("Peter")
                 .searchFilter(peterSearchFilter)
                 .build();

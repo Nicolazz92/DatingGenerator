@@ -22,7 +22,7 @@ public class User extends BaseEntity {
     private Integer age;
     private BodyType bodyType;
     private String description;
-    private Double height;
+    private Integer height;
     private SearchFilter searchFilter;
     private Set<Match> matches = new HashSet<>();
 
