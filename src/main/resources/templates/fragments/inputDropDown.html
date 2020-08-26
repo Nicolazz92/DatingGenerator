@@ -11,15 +11,6 @@
                     <option th:each="item : ${enumArray}"
                             th:value="${item}" th:text="${item}"></option>
                 </select>
-                <span th:if="${valid}"
-                      class="glyphicon glyphicon-ok form-control-feedback"
-                      aria-hidden="true"></span>
-                <th:block th:if="${!valid}">
-            <span
-                    class="glyphicon glyphicon-remove form-control-feedback"
-                    aria-hidden="true"></span>
-                    <span class="help-inline" th:errors="*{__${name}__}">Error</span>
-                </th:block>
             </div>
         </div>
     </th:block>
