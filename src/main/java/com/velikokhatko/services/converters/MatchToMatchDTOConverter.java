@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional(readOnly = true)
-public class MatchDTOConverter implements Converter<Match, MatchDTO> {
+public class MatchToMatchDTOConverter implements Converter<Match, MatchDTO> {
 
     @Override
     public MatchDTO convert(Match entity) {
