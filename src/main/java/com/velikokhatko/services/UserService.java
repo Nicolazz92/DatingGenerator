@@ -32,11 +32,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public UserDTO getUserDTOById(Long userId) {
         Optional<User> byId = userRepository.findById(userId);
-        if (byId.isPresent()) {
-            return conversionService.convert(byId, UserDTO.class);
-        } else {
-            return null;
-        }
+        return byId.map(user -> conversionService.convert(user, UserDTO.class)).orElse(null);
     }
 
     @Transactional(readOnly = true)

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body th:object="${user}">
+
+<head>
+    <title th:text="|*{name} profile|">User Profile</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<h1><span th:text="*{name}">username</span></h1>
+
+<div>
+    <p th:unless="${user.gender == null}">Gender: <span th:text="*{gender.name()}">gender</span></p>
+    <p th:unless="${user.age == null}">Age: <span th:text="*{age}">age</span></p>
+    <p th:unless="${user.bodyType == null}">Body type: <span th:text="*{bodyType.name()}">body type</span></p>
+    <p th:unless="${user.height == null}">Height: <span th:text="*{height}">height</span></p>
+    <p th:unless="${user.description == null}">Description: <span th:text="*{description}">description</span></p>
+    </br>
+</div>
+
+<h3>
+    <tr>
+        <td><a th:text="|Matches|" th:href="@{/matches/{id}(id=${user.id})}">Matches</a></td>
+    </tr>
+    </br>
+</h3>
+
+<h3>
+    <tr>
+        <td><a th:text="|Filter settings|" th:href="@{/filter/{id}(id=${user.id})}">Filter settings</a></td>
+    </tr>
+    </br>
+</h3>
+
+</body>
+</html>
