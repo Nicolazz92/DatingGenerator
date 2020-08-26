@@ -1,11 +1,17 @@
 package com.velikokhatko.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,14 +20,13 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class Match extends BaseEntity {
-    private Set<User> persons;
+    private static final Logger logger = LoggerFactory.getLogger(Match.class);
+
+    private Set<User> persons = new HashSet<>();
     private LocalDateTime creationDateTime;
 
     public Match(User person1, User person2) {
-        HashSet<User> users = new HashSet<>();
-        users.add(person1);
-        users.add(person2);
-        persons = Collections.unmodifiableSet(users);
+        persons = Set.of(person1, person2);
     }
 
     @CreationTimestamp
@@ -35,8 +40,8 @@ public class Match extends BaseEntity {
             inverseJoinColumns = {@JoinColumn(name = "MATCH_ID")}
     )
     public Set<User> getPersons() {
-        if (persons == null) {
-            throw new PersistenceException("Match in not populated by users");
+        if (persons == null || persons.size() != 2) {
+            logger.warn("Match with id={} is not populated by users", getId());
         }
         return persons;
     }

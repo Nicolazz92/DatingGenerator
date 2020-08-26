@@ -1,7 +1,5 @@
 package com.velikokhatko.view.dto;
 
-import com.velikokhatko.model.enums.BodyType;
-import com.velikokhatko.model.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,13 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
+public class SimpleUserDTO {
     private Long id;
     private String name;
-    private Gender gender;
     private Byte[] image;
-    private Integer age;
-    private BodyType bodyType;
-    private String description;
-    private Double height;
 }
