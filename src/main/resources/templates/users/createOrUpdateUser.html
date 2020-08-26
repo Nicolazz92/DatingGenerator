@@ -1,0 +1,23 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<h2>User</h2>
+<form th:object="${user}" class="form-horizontal" id="add-owner-form" method="post">
+    <div class="form-group has-feedback">
+        <input th:replace="~{fragments/inputField :: input ('Name', 'name')}"/>
+        <input th:replace="~{fragments/inputDropDown :: input ('Gender', 'gender', ${T(com.velikokhatko.model.enums.Gender).values()})}"/>
+        <input th:replace="~{fragments/inputField :: input ('Age', 'age')}"/>
+        <input th:replace="~{fragments/inputField :: input ('Description', 'description')}"/>
+        <input th:replace="~{fragments/inputField :: input ('Height', 'height')}"/>
+    </div>
+    <div class="form-group">
+        <br>
+        <div class="col-sm-offset-2 col-sm-10">
+            <button
+                    th:with="text=${user.id == null} ? 'Add User' : 'Update User'"
+                    class="btn btn-default" type="submit" th:text="${text}">Add User
+            </button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

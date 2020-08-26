@@ -17,8 +17,13 @@
     <p th:unless="${user.bodyType == null}">Body type: <span th:text="*{bodyType.name()}">body type</span></p>
     <p th:unless="${user.height == null}">Height: <span th:text="*{height}">height</span></p>
     <p th:unless="${user.description == null}">Description: <span th:text="*{description}">description</span></p>
-    </br>
 </div>
+<h4>
+    <tr>
+        <td><a th:text="|Edit|" th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a></td>
+    </tr>
+</h4>
+</br>
 
 <h3>
     <tr>

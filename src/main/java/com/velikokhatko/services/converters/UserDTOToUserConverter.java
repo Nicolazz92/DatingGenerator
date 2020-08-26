@@ -31,7 +31,13 @@ public class UserDTOToUserConverter implements Converter<UserDTO, User> {
                 user = byId.get();
             }
         }
-        modelMapper.map(dto, user);
+        user.setName(dto.getName());
+        user.setGender(dto.getGender());
+//        user.setImage(dto.getImage());
+        user.setAge(dto.getAge());
+//        user.setBodyType(dto.getBodyType());
+        user.setDescription(dto.getDescription());
+        user.setHeight(dto.getHeight());
         return user;
     }
 }
