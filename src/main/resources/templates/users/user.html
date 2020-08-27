@@ -12,7 +12,8 @@
 <h1><span th:text="*{name}">username</span></h1>
 
 <div>
-    <img th:unless="${user.image64 == null}" th:src="@{'data:image/jpeg;base64,' + ${user.image64}}">
+    <img style="height:200px" th:unless="${user.image64 == null}"
+         th:src="@{'data:image/jpeg;base64,' + ${user.image64}}">
     <p th:unless="${user.gender == null}">Gender: <span th:text="*{gender.name()}">gender</span></p>
     <p th:unless="${user.age == null}">Age: <span th:text="*{age}">age</span></p>
     <p th:unless="${user.bodyType == null}">Body type: <span th:text="*{bodyType.name()}">body type</span></p>

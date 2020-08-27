@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -42,8 +41,11 @@ public class UserDTOToUserConverter implements Converter<UserDTO, User> {
     }
 
     private void setPhoto(UserDTO dto, User user) {
+        if (dto.getPhoto() == null || dto.getPhoto().isEmpty()) {
+            return;
+        }
         try {
-            user.setPhoto(Objects.requireNonNull(dto.getPhoto()).getBytes());
+            user.setPhoto(dto.getPhoto().getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
