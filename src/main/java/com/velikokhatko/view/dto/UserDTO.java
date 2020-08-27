@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
@@ -17,7 +16,6 @@ public class UserDTO {
     private Long id;
     private String name;
     private Gender gender;
-    @Nullable
     private MultipartFile photo;
     private Integer age;
     private BodyType bodyType;

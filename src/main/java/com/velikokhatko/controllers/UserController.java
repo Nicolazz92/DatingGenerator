@@ -62,8 +62,8 @@ public class UserController {
     @PostMapping("/{userId}/edit")
     public String processCreateOrUpdateUserForm(@ModelAttribute UserDTO userDTO, @PathVariable Long userId) {
         userDTO.setId(userId);
-        userService.createOrUpdate(userDTO);
-        return "redirect:/users/" + userId;
+        User user = userService.createOrUpdate(userDTO);
+        return "redirect:/users/" + user.getId();
     }
 
     @PostMapping("/{userId}/delete")

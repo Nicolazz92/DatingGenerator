@@ -17,6 +17,7 @@
 
   <properties>
     <modelmapper.version>2.3.0</modelmapper.version>
+<!--    <fileuploads.version>1.4</fileuploads.version>-->
   </properties>
 
   <dependencies>
@@ -58,6 +59,11 @@
       <artifactId>lombok</artifactId>
       <optional>true</optional>
     </dependency>
+<!--    <dependency>-->
+<!--      <groupId>commons-fileupload</groupId>-->
+<!--      <artifactId>commons-fileupload</artifactId>-->
+<!--      <version>${fileuploads.version}</version>-->
+<!--    </dependency>-->
 
     <!--test-->
     <dependency>

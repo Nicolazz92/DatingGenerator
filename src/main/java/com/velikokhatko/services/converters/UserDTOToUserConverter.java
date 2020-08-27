@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -31,11 +33,19 @@ public class UserDTOToUserConverter implements Converter<UserDTO, User> {
         }
         user.setName(dto.getName());
         user.setGender(dto.getGender());
-//        user.setImage(dto.getImage());
+        setPhoto(dto, user);
         user.setAge(dto.getAge());
         user.setBodyType(dto.getBodyType());
         user.setDescription(dto.getDescription());
         user.setHeight(dto.getHeight());
         return user;
+    }
+
+    private void setPhoto(UserDTO dto, User user) {
+        try {
+            user.setPhoto(Objects.requireNonNull(dto.getPhoto()).getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
