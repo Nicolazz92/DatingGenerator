@@ -52,4 +52,11 @@ public class User extends BaseEntity {
     public Set<Match> getMatches() {
         return matches;
     }
+
+    @PrePersist
+    public void initSearchFilter() {
+        if (searchFilter == null) {
+            searchFilter = new SearchFilter();
+        }
+    }
 }

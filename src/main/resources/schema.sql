@@ -33,8 +33,7 @@ CREATE TABLE SEARCH_FILTER
     age_min    INTEGER,
     age_max    INTEGER,
     height_min INTEGER,
-    height_max INTEGER,
-    body_types VARCHAR(255)
+    height_max INTEGER
 );
 
 CREATE TABLE BODY_TYPES
