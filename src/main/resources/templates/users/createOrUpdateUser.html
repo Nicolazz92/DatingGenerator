@@ -1,8 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<h2>User</h2>
+<h2>Edit user profile</h2>
 <form th:object="${user}" class="form-horizontal" id="add-owner-form" method="post" enctype="multipart/form-data">
-    <img th:src="@{'data:image/jpeg;base64,' + ${user.image64}}">
+    <img th:unless="${user.image64 == null}" th:src="@{'data:image/jpeg;base64,' + ${user.image64}}">
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/inputTextField :: input ('Name', 'name')}"/>
         <input th:replace="~{fragments/inputDropDownEnum :: input ('Gender', 'gender', ${T(com.velikokhatko.model.enums.Gender).values()})}"/>
