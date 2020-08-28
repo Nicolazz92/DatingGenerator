@@ -18,6 +18,7 @@ public class UserToUserDTOConverter implements Converter<User, UserDTO> {
         if (entity.getPhoto() != null && entity.getPhoto().length > 0) {
             result.setImage64(Base64.getEncoder().encodeToString(entity.getPhoto()));
         }
+        result.setFilterId(entity.getSearchFilter().getId());
         return result;
     }
 }

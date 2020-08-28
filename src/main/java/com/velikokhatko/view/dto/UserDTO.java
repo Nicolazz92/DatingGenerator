@@ -21,5 +21,7 @@ public class UserDTO {
     private BodyType bodyType;
     private String description;
     private Integer height;
+
     private String image64;
+    private Long filterId;
 }
