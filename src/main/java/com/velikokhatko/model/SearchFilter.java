@@ -15,12 +15,18 @@ import java.util.Set;
 @Builder
 @Entity
 public class SearchFilter extends BaseEntity {
+    private User user;
     private Gender gender;
     private Integer ageMin;
     private Integer ageMax;
     private Integer heightMin;
     private Integer heightMax;
     private Set<BodyType> bodyTypes = new HashSet<>();
+
+    @OneToOne(mappedBy = "searchFilter")
+    public User getUser() {
+        return user;
+    }
 
     @Enumerated(EnumType.STRING)
     public Gender getGender() {

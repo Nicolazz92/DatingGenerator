@@ -31,8 +31,8 @@ public class SearchFilterService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(SearchFilterDTO searchFilterDTO) {
+    public SearchFilter update(SearchFilterDTO searchFilterDTO) {
         SearchFilter searchFilter = conversionService.convert(searchFilterDTO, SearchFilter.class);
-        searchFilterRepository.save(Objects.requireNonNull(searchFilter));
+        return searchFilterRepository.save(Objects.requireNonNull(searchFilter));
     }
 }

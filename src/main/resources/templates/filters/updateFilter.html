@@ -3,6 +3,7 @@
 <form th:object="${filter}" class="form-horizontal" id="add-owner-form" method="post">
     <h2>Edit filter</h2>
     <div class="form-group has-feedback">
+        <input th:hidden="true" th:name="userId" type="number" th:value="1"/>
         <input th:replace="~{fragments/inputDropDownEnum :: input ('Gender', 'gender', ${T(com.velikokhatko.model.enums.Gender).values()})}"/>
         <input th:replace="~{fragments/inputIntegerField :: input ('Minimum Age', 'ageMin')}"/>
         <input th:replace="~{fragments/inputIntegerField :: input ('Maximum Age', 'ageMax')}"/>
