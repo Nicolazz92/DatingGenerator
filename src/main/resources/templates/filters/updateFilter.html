@@ -4,10 +4,10 @@
     <h2>Edit filter</h2>
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/inputDropDownEnum :: input ('Gender', 'gender', ${T(com.velikokhatko.model.enums.Gender).values()})}"/>
-        <input th:replace="~{fragments/inputIntegerField :: input ('Minimum Age', 'ageMin')}"/>
-        <input th:replace="~{fragments/inputIntegerField :: input ('Maximum Age', 'ageMax')}"/>
-        <input th:replace="~{fragments/inputIntegerField :: input ('Minimum Height', 'heightMin')}"/>
-        <input th:replace="~{fragments/inputIntegerField :: input ('Maximum Height', 'heightMax')}"/>
+        <input th:replace="~{fragments/inputNumberField :: input ('Minimum Age', 'ageMin')}"/>
+        <input th:replace="~{fragments/inputNumberField :: input ('Maximum Age', 'ageMax')}"/>
+        <input th:replace="~{fragments/inputNumberField :: input ('Minimum Height', 'heightMin')}"/>
+        <input th:replace="~{fragments/inputNumberField :: input ('Maximum Height', 'heightMax')}"/>
 
         <br>
         <div th:text="|Body types setting|"></div>
