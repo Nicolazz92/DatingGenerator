@@ -2,6 +2,7 @@ package com.velikokhatko.utils;
 
 import com.velikokhatko.model.SearchFilter;
 import com.velikokhatko.model.User;
+import com.velikokhatko.model.User_;
 import com.velikokhatko.model.enums.BodyType;
 import com.velikokhatko.model.enums.Gender;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,7 +29,7 @@ public class FilterSpecificationBuilder {
         if (gender == null) {
             return criteriaBuilder.and();
         } else {
-            return criteriaBuilder.equal(root.get("gender"), gender);
+            return criteriaBuilder.equal(root.get(User_.gender), gender);
         }
     }
 
@@ -36,7 +37,7 @@ public class FilterSpecificationBuilder {
         if (ageMin == null) {
             return criteriaBuilder.and();
         } else {
-            return criteriaBuilder.greaterThanOrEqualTo(root.get("age"), ageMin);
+            return criteriaBuilder.greaterThanOrEqualTo(root.get(User_.age), ageMin);
         }
     }
 
@@ -44,7 +45,7 @@ public class FilterSpecificationBuilder {
         if (ageMax == null) {
             return criteriaBuilder.and();
         } else {
-            return criteriaBuilder.lessThanOrEqualTo(root.get("age"), ageMax);
+            return criteriaBuilder.lessThanOrEqualTo(root.get(User_.age), ageMax);
         }
     }
 
@@ -52,7 +53,7 @@ public class FilterSpecificationBuilder {
         if (heightMin == null) {
             return criteriaBuilder.and();
         } else {
-            return criteriaBuilder.greaterThanOrEqualTo(root.get("height"), heightMin);
+            return criteriaBuilder.greaterThanOrEqualTo(root.get(User_.height), heightMin);
         }
     }
 
@@ -60,7 +61,7 @@ public class FilterSpecificationBuilder {
         if (heightMax == null) {
             return criteriaBuilder.and();
         } else {
-            return criteriaBuilder.lessThanOrEqualTo(root.get("height"), heightMax);
+            return criteriaBuilder.lessThanOrEqualTo(root.get(User_.height), heightMax);
         }
     }
 
@@ -68,9 +69,9 @@ public class FilterSpecificationBuilder {
         if (bodyTypes == null || bodyTypes.size() == 0) {
             return criteriaBuilder.and();
         } else if (bodyTypes.size() == 1 && bodyTypes.iterator().hasNext()) {
-            return criteriaBuilder.equal(root.get("bodyType"), bodyTypes.iterator().next());
+            return criteriaBuilder.equal(root.get(User_.bodyType), bodyTypes.iterator().next());
         } else {
-            return root.get("bodyType").in(bodyTypes);
+            return root.get(User_.bodyType).in(bodyTypes);
         }
     }
 }

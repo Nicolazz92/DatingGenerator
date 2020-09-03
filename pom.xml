@@ -17,6 +17,7 @@
 
   <properties>
     <modelmapper.version>2.3.0</modelmapper.version>
+    <java.version>14</java.version>
   </properties>
 
   <dependencies>
@@ -58,6 +59,10 @@
       <artifactId>lombok</artifactId>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-jpamodelgen</artifactId>
+    </dependency>
 
     <!--test-->
     <dependency>
@@ -98,8 +103,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <configuration>
-                <source>9</source>
-                <target>9</target>
+                <release>${java.version}</release>
             </configuration>
         </plugin>
     </plugins>
