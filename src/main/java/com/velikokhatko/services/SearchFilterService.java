@@ -24,7 +24,6 @@ public class SearchFilterService {
         this.conversionService = conversionService;
     }
 
-    @Transactional(readOnly = true)
     public SearchFilterDTO getSearchFilterDTOById(Long id) {
         Optional<SearchFilter> byId = searchFilterRepository.findById(id);
         return byId.map(filter -> conversionService.convert(filter, SearchFilterDTO.class)).orElse(null);

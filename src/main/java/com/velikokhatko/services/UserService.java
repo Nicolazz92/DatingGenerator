@@ -24,20 +24,14 @@ public class UserService {
         this.conversionService = conversionService;
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(Long userId) {
-        userRepository.deleteById(userId);
-    }
-
-    @Transactional(readOnly = true)
-    public UserDTO getUserDTOById(Long userId) {
-        Optional<User> byId = userRepository.findById(userId);
-        return byId.map(user -> conversionService.convert(user, UserDTO.class)).orElse(null);
-    }
-
     @Transactional(readOnly = true)
     public User getUserById(Long userId) {
         return userRepository.findById(userId).orElse(null);
+    }
+
+    public UserDTO getUserDTOById(Long userId) {
+        Optional<User> byId = userRepository.findById(userId);
+        return byId.map(user -> conversionService.convert(user, UserDTO.class)).orElse(null);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -49,5 +43,10 @@ public class UserService {
     public User createOrUpdate(UserDTO dto) {
         User user = conversionService.convert(dto, User.class);
         return userRepository.save(Objects.requireNonNull(user));
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void delete(Long userId) {
+        userRepository.deleteById(userId);
     }
 }
