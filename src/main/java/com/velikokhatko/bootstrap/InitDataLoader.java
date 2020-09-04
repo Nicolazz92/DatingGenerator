@@ -1,7 +1,7 @@
 package com.velikokhatko.bootstrap;
 
-import com.velikokhatko.model.SearchFilter;
 import com.velikokhatko.model.User;
+import com.velikokhatko.model.UserMatchSearchingFilter;
 import com.velikokhatko.model.enums.BodyType;
 import com.velikokhatko.model.enums.Gender;
 import com.velikokhatko.repository.UserRepository;
@@ -31,7 +31,7 @@ public class InitDataLoader implements CommandLineRunner {
         bodyTypes.add(BodyType.AVERAGE);
         bodyTypes.add(BodyType.ATHLETIC);
 
-        SearchFilter peterSearchFilter = SearchFilter.builder()
+        UserMatchSearchingFilter peterUserMatchSearchingFilter = UserMatchSearchingFilter.builder()
                 .gender(Gender.MALE)
                 .heightMin(175)
                 .ageMin(27)
@@ -46,7 +46,7 @@ public class InitDataLoader implements CommandLineRunner {
                 .description("Kate is a good girl")
                 .gender(Gender.FEMALE)
                 .height(165)
-                .searchFilter(peterSearchFilter)
+                .userMatchSearchingFilter(peterUserMatchSearchingFilter)
                 .build();
 
         userRepository.save(peter);

@@ -1,7 +1,7 @@
 package com.velikokhatko.utils;
 
-import com.velikokhatko.model.SearchFilter;
 import com.velikokhatko.model.User;
+import com.velikokhatko.model.UserMatchSearchingFilter;
 import com.velikokhatko.model.User_;
 import com.velikokhatko.model.enums.BodyType;
 import com.velikokhatko.model.enums.Gender;
@@ -14,14 +14,14 @@ import java.util.Set;
 
 public class FilterSpecificationBuilder {
 
-    public static Specification<User> buildSpecification(SearchFilter searchFilter) {
+    public static Specification<User> buildSpecification(UserMatchSearchingFilter userMatchSearchingFilter) {
         return (root, query, criteriaBuilder) -> criteriaBuilder.and(
-                buildGenderPredicate(root, criteriaBuilder, searchFilter.getGender()),
-                buildAgeMinPredicate(root, criteriaBuilder, searchFilter.getAgeMin()),
-                buildAgeMaxPredicate(root, criteriaBuilder, searchFilter.getAgeMax()),
-                buildHeightMinPredicate(root, criteriaBuilder, searchFilter.getHeightMin()),
-                buildHeightMaxPredicate(root, criteriaBuilder, searchFilter.getHeightMax()),
-                buildBodyTypesPredicate(root, criteriaBuilder, searchFilter.getBodyTypes())
+                buildGenderPredicate(root, criteriaBuilder, userMatchSearchingFilter.getGender()),
+                buildAgeMinPredicate(root, criteriaBuilder, userMatchSearchingFilter.getAgeMin()),
+                buildAgeMaxPredicate(root, criteriaBuilder, userMatchSearchingFilter.getAgeMax()),
+                buildHeightMinPredicate(root, criteriaBuilder, userMatchSearchingFilter.getHeightMin()),
+                buildHeightMaxPredicate(root, criteriaBuilder, userMatchSearchingFilter.getHeightMax()),
+                buildBodyTypesPredicate(root, criteriaBuilder, userMatchSearchingFilter.getBodyTypes())
         );
     }
 

@@ -1,10 +1,10 @@
 package com.velikokhatko.services;
 
-import com.velikokhatko.model.SearchFilter;
 import com.velikokhatko.model.User;
+import com.velikokhatko.model.UserMatchSearchingFilter;
 import com.velikokhatko.repository.UserRepository;
-import com.velikokhatko.view.dto.SearchFilterDTO;
 import com.velikokhatko.view.dto.UserDTO;
+import com.velikokhatko.view.dto.UserMatchSearchingFilterDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
@@ -53,21 +53,21 @@ public class UserService {
         userRepository.deleteById(userId);
     }
 
-    public SearchFilterDTO getSearchFilterDTOById(Long id) {
+    public UserMatchSearchingFilterDTO getSearchFilterDTOById(Long id) {
         Optional<User> byId = userRepository.findById(id);
-        return byId.map(user -> conversionService.convert(user.getSearchFilter(), SearchFilterDTO.class)).orElse(null);
+        return byId.map(user -> conversionService.convert(user.getUserMatchSearchingFilter(), UserMatchSearchingFilterDTO.class)).orElse(null);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(SearchFilterDTO searchFilterDTO) {
-        SearchFilter searchFilter = conversionService.convert(searchFilterDTO, SearchFilter.class);
-        Optional<User> userOptional = userRepository.findById(Objects.requireNonNull(searchFilter).getUserId());
+    public void update(UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
+        UserMatchSearchingFilter userMatchSearchingFilter = conversionService.convert(userMatchSearchingFilterDTO, UserMatchSearchingFilter.class);
+        Optional<User> userOptional = userRepository.findById(Objects.requireNonNull(userMatchSearchingFilter).getUserId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            user.setSearchFilter(searchFilter);
+            user.setUserMatchSearchingFilter(userMatchSearchingFilter);
             userRepository.save(user);
         } else {
-            throw new EntityExistsException("userId = " + searchFilterDTO.getUserId());
+            throw new EntityExistsException("userId = " + userMatchSearchingFilterDTO.getUserId());
         }
     }
 

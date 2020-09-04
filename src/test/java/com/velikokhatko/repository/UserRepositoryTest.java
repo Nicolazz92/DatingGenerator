@@ -1,7 +1,7 @@
 package com.velikokhatko.repository;
 
-import com.velikokhatko.model.SearchFilter;
 import com.velikokhatko.model.User;
+import com.velikokhatko.model.UserMatchSearchingFilter;
 import com.velikokhatko.model.enums.BodyType;
 import com.velikokhatko.model.enums.Gender;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ class UserRepositoryTest {
 
     @Test
     public void saveTest() {
-        SearchFilter peterSearchFilter = SearchFilter.builder()
+        UserMatchSearchingFilter peterUserMatchSearchingFilter = UserMatchSearchingFilter.builder()
                 .gender(Gender.FEMALE)
                 .bodyTypes(Set.of(BodyType.AVERAGE, BodyType.ATHLETIC, BodyType.THIN))
                 .build();
@@ -32,7 +32,7 @@ class UserRepositoryTest {
                 .gender(Gender.MALE)
                 .height(180)
                 .name("Peter")
-                .searchFilter(peterSearchFilter)
+                .userMatchSearchingFilter(peterUserMatchSearchingFilter)
                 .build();
 
         userRepository.save(peter);

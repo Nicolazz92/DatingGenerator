@@ -1,7 +1,7 @@
 package com.velikokhatko.utils;
 
-import com.velikokhatko.model.SearchFilter;
 import com.velikokhatko.model.User;
+import com.velikokhatko.model.UserMatchSearchingFilter;
 import com.velikokhatko.model.enums.BodyType;
 import com.velikokhatko.model.enums.Gender;
 import com.velikokhatko.repository.UserRepository;
@@ -23,12 +23,12 @@ class FilterSpecificationBuilderTest {
 
     @Autowired
     private UserRepository userRepository;
-    private SearchFilter peterSearchFilter;
+    private UserMatchSearchingFilter peterUserMatchSearchingFilter;
     private User peter;
 
     @BeforeEach
     public void setUp() {
-        peterSearchFilter = SearchFilter.builder()
+        peterUserMatchSearchingFilter = UserMatchSearchingFilter.builder()
                 .gender(Gender.MALE)
                 .ageMin(29)
                 .ageMax(31)
@@ -44,7 +44,7 @@ class FilterSpecificationBuilderTest {
                 .gender(Gender.MALE)
                 .height(180)
                 .name("Peter")
-                .searchFilter(peterSearchFilter)
+                .userMatchSearchingFilter(peterUserMatchSearchingFilter)
                 .build();
 
         userRepository.save(peter);
@@ -52,7 +52,7 @@ class FilterSpecificationBuilderTest {
 
     @Test
     public void test() {
-        List<User> all = userRepository.findAll(FilterSpecificationBuilder.buildSpecification(peterSearchFilter));
+        List<User> all = userRepository.findAll(FilterSpecificationBuilder.buildSpecification(peterUserMatchSearchingFilter));
         Assert.isTrue(all.contains(peter));
     }
 }

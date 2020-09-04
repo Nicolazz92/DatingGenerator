@@ -23,14 +23,14 @@ public class User extends BaseEntity {
     private BodyType bodyType;
     private String description;
     private Integer height;
-    private SearchFilter searchFilter;
+    private UserMatchSearchingFilter userMatchSearchingFilter;
     private Set<Match> matches = new HashSet<>();
 
     @Override
     public void setId(Long id) {
         super.setId(id);
-        if (searchFilter != null) {
-            searchFilter.setUserId(id);
+        if (userMatchSearchingFilter != null) {
+            userMatchSearchingFilter.setUserId(id);
         }
     }
 
@@ -52,13 +52,13 @@ public class User extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @PrimaryKeyJoinColumn
-    public SearchFilter getSearchFilter() {
-        return searchFilter;
+    public UserMatchSearchingFilter getUserMatchSearchingFilter() {
+        return userMatchSearchingFilter;
     }
 
-    public void setSearchFilter(SearchFilter searchFilter) {
-        this.searchFilter = searchFilter;
-        this.searchFilter.setUserId(getId());
+    public void setUserMatchSearchingFilter(UserMatchSearchingFilter userMatchSearchingFilter) {
+        this.userMatchSearchingFilter = userMatchSearchingFilter;
+        this.userMatchSearchingFilter.setUserId(getId());
     }
 
     @ManyToMany(mappedBy = "persons")
@@ -68,9 +68,9 @@ public class User extends BaseEntity {
 
     @PrePersist
     public void initSearchFilter() {
-        if (searchFilter == null) {
-            searchFilter = new SearchFilter();
-            searchFilter.setUserId(getId());
+        if (userMatchSearchingFilter == null) {
+            userMatchSearchingFilter = new UserMatchSearchingFilter();
+            userMatchSearchingFilter.setUserId(getId());
         }
     }
 }

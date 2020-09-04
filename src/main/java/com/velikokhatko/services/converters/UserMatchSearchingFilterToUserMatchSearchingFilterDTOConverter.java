@@ -1,19 +1,19 @@
 package com.velikokhatko.services.converters;
 
-import com.velikokhatko.model.SearchFilter;
+import com.velikokhatko.model.UserMatchSearchingFilter;
 import com.velikokhatko.model.enums.BodyType;
-import com.velikokhatko.view.dto.SearchFilterDTO;
+import com.velikokhatko.view.dto.UserMatchSearchingFilterDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SearchFilterToSearchFilterDTOConverter implements Converter<SearchFilter, SearchFilterDTO> {
+public class UserMatchSearchingFilterToUserMatchSearchingFilterDTOConverter implements Converter<UserMatchSearchingFilter, UserMatchSearchingFilterDTO> {
 
     @Override
-    public SearchFilterDTO convert(SearchFilter entity) {
+    public UserMatchSearchingFilterDTO convert(UserMatchSearchingFilter entity) {
         ModelMapper modelMapper = new ModelMapper();
-        SearchFilterDTO result = modelMapper.map(entity, SearchFilterDTO.class);
+        UserMatchSearchingFilterDTO result = modelMapper.map(entity, UserMatchSearchingFilterDTO.class);
         result.setFindThin(entity.getBodyTypes().contains(BodyType.THIN));
         result.setFindAverage(entity.getBodyTypes().contains(BodyType.AVERAGE));
         result.setFindFat(entity.getBodyTypes().contains(BodyType.FAT));

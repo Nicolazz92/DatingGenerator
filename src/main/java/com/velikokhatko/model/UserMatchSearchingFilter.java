@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-public class SearchFilter {
+public class UserMatchSearchingFilter {
     private Long userId;
     private Gender gender;
     private Integer ageMin;

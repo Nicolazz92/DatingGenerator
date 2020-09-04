@@ -2,8 +2,8 @@ package com.velikokhatko.controllers;
 
 import com.velikokhatko.model.User;
 import com.velikokhatko.services.UserService;
-import com.velikokhatko.view.dto.SearchFilterDTO;
 import com.velikokhatko.view.dto.UserDTO;
+import com.velikokhatko.view.dto.UserMatchSearchingFilterDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -82,9 +82,9 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/filter/edit")
-    public String processUpdateFilterForm(@ModelAttribute SearchFilterDTO searchFilterDTO, @PathVariable Long userId) {
-        searchFilterDTO.setUserId(userId);
-        userService.update(searchFilterDTO);
+    public String processUpdateFilterForm(@ModelAttribute UserMatchSearchingFilterDTO userMatchSearchingFilterDTO, @PathVariable Long userId) {
+        userMatchSearchingFilterDTO.setUserId(userId);
+        userService.update(userMatchSearchingFilterDTO);
         return "redirect:/users/" + userId;
     }
 }
