@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class SearchFilterDTO {
-    private Long id;
+    private Long userId;
     private Gender gender;
     private Integer ageMin;
     private Integer ageMax;

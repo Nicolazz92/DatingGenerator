@@ -1,7 +1,9 @@
 package com.velikokhatko.services;
 
+import com.velikokhatko.model.SearchFilter;
 import com.velikokhatko.model.User;
 import com.velikokhatko.repository.UserRepository;
+import com.velikokhatko.view.dto.SearchFilterDTO;
 import com.velikokhatko.view.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -49,4 +52,23 @@ public class UserService {
     public void delete(Long userId) {
         userRepository.deleteById(userId);
     }
+
+    public SearchFilterDTO getSearchFilterDTOById(Long id) {
+        Optional<User> byId = userRepository.findById(id);
+        return byId.map(user -> conversionService.convert(user.getSearchFilter(), SearchFilterDTO.class)).orElse(null);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void update(SearchFilterDTO searchFilterDTO) {
+        SearchFilter searchFilter = conversionService.convert(searchFilterDTO, SearchFilter.class);
+        Optional<User> userOptional = userRepository.findById(Objects.requireNonNull(searchFilter).getUserId());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setSearchFilter(searchFilter);
+            userRepository.save(user);
+        } else {
+            throw new EntityExistsException("userId = " + searchFilterDTO.getUserId());
+        }
+    }
+
 }

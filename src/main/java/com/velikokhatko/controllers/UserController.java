@@ -2,6 +2,7 @@ package com.velikokhatko.controllers;
 
 import com.velikokhatko.model.User;
 import com.velikokhatko.services.UserService;
+import com.velikokhatko.view.dto.SearchFilterDTO;
 import com.velikokhatko.view.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     private static final String VIEW_USER = "users/user";
     private static final String CREATE_OR_UPDATE_USER = "users/createOrUpdateUser";
+    private static final String UPDATE_FILTER = "filters/updateFilter";
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final UserService userService;
@@ -70,5 +72,19 @@ public class UserController {
     public String processDelete(@PathVariable Long userId) {
         userService.delete(userId);
         return "redirect:/";
+    }
+
+    @GetMapping("/{userId}/filter/edit")
+    public ModelAndView initUpdateFilterForm(@PathVariable Long userId) {
+        ModelAndView mav = new ModelAndView(UPDATE_FILTER);
+        mav.addObject("filter", userService.getSearchFilterDTOById(userId));
+        return mav;
+    }
+
+    @PostMapping("/{userId}/filter/edit")
+    public String processUpdateFilterForm(@ModelAttribute SearchFilterDTO searchFilterDTO, @PathVariable Long userId) {
+        searchFilterDTO.setUserId(userId);
+        userService.update(searchFilterDTO);
+        return "redirect:/users/" + userId;
     }
 }

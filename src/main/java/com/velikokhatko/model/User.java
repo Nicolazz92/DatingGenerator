@@ -26,6 +26,14 @@ public class User extends BaseEntity {
     private SearchFilter searchFilter;
     private Set<Match> matches = new HashSet<>();
 
+    @Override
+    public void setId(Long id) {
+        super.setId(id);
+        if (searchFilter != null) {
+            searchFilter.setUserId(id);
+        }
+    }
+
     @Enumerated(EnumType.STRING)
     public Gender getGender() {
         return gender;
@@ -42,10 +50,15 @@ public class User extends BaseEntity {
         return bodyType;
     }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "search_filter_id")
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @PrimaryKeyJoinColumn
     public SearchFilter getSearchFilter() {
         return searchFilter;
+    }
+
+    public void setSearchFilter(SearchFilter searchFilter) {
+        this.searchFilter = searchFilter;
+        this.searchFilter.setUserId(getId());
     }
 
     @ManyToMany(mappedBy = "persons")
@@ -57,6 +70,7 @@ public class User extends BaseEntity {
     public void initSearchFilter() {
         if (searchFilter == null) {
             searchFilter = new SearchFilter();
+            searchFilter.setUserId(getId());
         }
     }
 }

@@ -1,8 +1,9 @@
 package com.velikokhatko.services.converters;
 
 import com.velikokhatko.model.SearchFilter;
+import com.velikokhatko.model.User;
 import com.velikokhatko.model.enums.BodyType;
-import com.velikokhatko.repository.SearchFilterRepository;
+import com.velikokhatko.repository.UserRepository;
 import com.velikokhatko.view.dto.SearchFilterDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -15,20 +16,20 @@ import java.util.Optional;
 @Component
 public class SearchFilterDTOToSearchFilterConverter implements Converter<SearchFilterDTO, SearchFilter> {
 
-    private final SearchFilterRepository searchFilterRepository;
+    private final UserRepository userRepository;
 
-    public SearchFilterDTOToSearchFilterConverter(SearchFilterRepository searchFilterRepository) {
-        this.searchFilterRepository = searchFilterRepository;
+    public SearchFilterDTOToSearchFilterConverter(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public SearchFilter convert(SearchFilterDTO dto) {
         SearchFilter searchFilter = new SearchFilter();
-        if (dto.getId() != null) {
-            Optional<SearchFilter> byId = searchFilterRepository.findById(dto.getId());
+        if (dto.getUserId() != null) {
+            Optional<User> byId = userRepository.findById(dto.getUserId());
             if (byId.isPresent()) {
-                searchFilter = byId.get();
+                searchFilter = byId.get().getSearchFilter();
             }
         }
 

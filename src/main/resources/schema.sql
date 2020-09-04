@@ -15,8 +15,7 @@ CREATE TABLE USER
     age              INTEGER,
     body_type        VARCHAR(10),
     description      VARCHAR(255),
-    height           INTEGER,
-    search_filter_id LONG             NOT NULL
+    height           INTEGER
 );
 
 CREATE TABLE PERSON_JOIN_TABLE
@@ -28,7 +27,7 @@ CREATE TABLE PERSON_JOIN_TABLE
 
 CREATE TABLE SEARCH_FILTER
 (
-    id         LONG PRIMARY KEY NOT NULL,
+    user_id    LONG PRIMARY KEY NOT NULL,
     gender     VARCHAR(10),
     age_min    INTEGER,
     age_max    INTEGER,

@@ -23,5 +23,4 @@ public class UserDTO {
     private Integer height;
 
     private String image64;
-    private Long filterId;
 }

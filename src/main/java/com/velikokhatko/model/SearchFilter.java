@@ -14,8 +14,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Entity
-public class SearchFilter extends BaseEntity {
-    private User user;
+public class SearchFilter {
+    private Long userId;
     private Gender gender;
     private Integer ageMin;
     private Integer ageMax;
@@ -23,9 +23,9 @@ public class SearchFilter extends BaseEntity {
     private Integer heightMax;
     private Set<BodyType> bodyTypes = new HashSet<>();
 
-    @OneToOne(mappedBy = "searchFilter")
-    public User getUser() {
-        return user;
+    @Id
+    public Long getUserId() {
+        return userId;
     }
 
     @Enumerated(EnumType.STRING)
