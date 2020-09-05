@@ -23,13 +23,14 @@ public class UserMatchSearchingFilter {
     private Set<BodyType> bodyTypes = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "filter_gender")
+    @Column(name = "FILTER_GENDER")
     public Gender getGender() {
         return gender;
     }
 
     @ElementCollection(fetch = FetchType.EAGER, targetClass = BodyType.class)
-    @CollectionTable(name = "BODY_TYPES", joinColumns = {@JoinColumn(name = "id")})
+    @CollectionTable(name = "BODY_TYPES", joinColumns = {@JoinColumn(name = "USER_ID")})
+    @Column(name = "BODY_TYPE")
     @Enumerated(EnumType.STRING)
     public Set<BodyType> getBodyTypes() {
         return bodyTypes;

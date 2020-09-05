@@ -33,7 +33,7 @@ CREATE TABLE PERSON_JOIN_TABLE
 
 CREATE TABLE BODY_TYPES
 (
-    id         LONG NOT NULL,
-    body_types VARCHAR(10),
-    PRIMARY KEY (id, body_types)
+    user_id   LONG        NOT NULL,
+    body_type VARCHAR(10) NOT NULL,
+    PRIMARY KEY (user_id, body_type)
 )
