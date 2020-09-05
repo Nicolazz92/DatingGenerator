@@ -83,8 +83,7 @@ public class UserController {
 
     @PostMapping("/{userId}/filter/edit")
     public String processUpdateFilterForm(@ModelAttribute UserMatchSearchingFilterDTO userMatchSearchingFilterDTO, @PathVariable Long userId) {
-        userMatchSearchingFilterDTO.setUserId(userId);
-        userService.update(userMatchSearchingFilterDTO);
+        userService.update(userId, userMatchSearchingFilterDTO);
         return "redirect:/users/" + userId;
     }
 }

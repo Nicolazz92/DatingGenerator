@@ -41,7 +41,7 @@ public class InitDataLoader implements CommandLineRunner {
         User peter = User.builder()
                 .name("Kate")
                 .age(25)
-                .photo(getBytes("photos/kate.png"))
+//                .photo(getBytes("photos/kate.png"))
                 .bodyType(BodyType.ATHLETIC)
                 .description("Kate is a good girl")
                 .gender(Gender.FEMALE)

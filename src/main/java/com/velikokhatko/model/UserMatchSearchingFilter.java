@@ -13,9 +13,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@Embeddable
 public class UserMatchSearchingFilter {
-    private Long userId;
     private Gender gender;
     private Integer ageMin;
     private Integer ageMax;
@@ -23,12 +22,8 @@ public class UserMatchSearchingFilter {
     private Integer heightMax;
     private Set<BodyType> bodyTypes = new HashSet<>();
 
-    @Id
-    public Long getUserId() {
-        return userId;
-    }
-
     @Enumerated(EnumType.STRING)
+    @Column(name = "filter_gender")
     public Gender getGender() {
         return gender;
     }

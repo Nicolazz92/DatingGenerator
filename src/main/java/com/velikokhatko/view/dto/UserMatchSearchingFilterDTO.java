@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserMatchSearchingFilterDTO {
-    private Long userId;
     private Gender gender;
     private Integer ageMin;
     private Integer ageMax;

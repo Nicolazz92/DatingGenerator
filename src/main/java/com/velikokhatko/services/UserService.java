@@ -59,15 +59,15 @@ public class UserService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
+    public void update(Long userId, UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
         UserMatchSearchingFilter userMatchSearchingFilter = conversionService.convert(userMatchSearchingFilterDTO, UserMatchSearchingFilter.class);
-        Optional<User> userOptional = userRepository.findById(Objects.requireNonNull(userMatchSearchingFilter).getUserId());
+        Optional<User> userOptional = userRepository.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setUserMatchSearchingFilter(userMatchSearchingFilter);
             userRepository.save(user);
         } else {
-            throw new EntityExistsException("userId = " + userMatchSearchingFilterDTO.getUserId());
+            throw new EntityExistsException("userId=" + userId);
         }
     }
 
