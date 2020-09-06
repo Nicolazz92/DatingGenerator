@@ -1,4 +1,4 @@
-package com.velikokhatko.services.config;
+package com.velikokhatko.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

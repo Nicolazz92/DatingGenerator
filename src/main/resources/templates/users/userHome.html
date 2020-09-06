@@ -10,6 +10,9 @@
 </head>
 
 <h1><span th:text="*{name}">username</span></h1>
+<form method="POST" th:action="@{/logout}">
+    <button type="submit" name="submit" value="value" class="link-button">Logout</button>
+</form>
 
 <div>
     <img style="height:200px" th:unless="${user.image64 == null}"
@@ -22,7 +25,7 @@
 </div>
 <h4>
     <tr>
-        <td><a th:text="|Edit|" th:href="@{/users/{id}/edit(id=${user.id})}">Edit</a></td>
+        <td><a th:text="|Edit|" th:href="@{/users/home/edit}">Edit</a></td>
     </tr>
 </h4>
 </br>
@@ -36,7 +39,7 @@
 
 <h3>
     <tr>
-        <td><a th:text="|Filter settings|" th:href="@{/users/{id}/filter/edit(id=${user.id})}">Filter settings</a></td>
+        <td><a th:text="|Filter settings|" th:href="@{/users/home/filter/edit}">Filter settings</a></td>
     </tr>
     </br>
 </h3>

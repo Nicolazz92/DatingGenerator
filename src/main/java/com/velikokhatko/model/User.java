@@ -17,6 +17,7 @@ import java.util.Set;
 public class User extends BaseEntity {
 
     private String name;
+    private String googleClientId;
     private Gender gender;
     private byte[] photo;
     private Integer age;

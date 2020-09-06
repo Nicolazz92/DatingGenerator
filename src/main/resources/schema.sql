@@ -8,20 +8,21 @@ CREATE TABLE MATCH
 
 CREATE TABLE USER
 (
-    id            LONG PRIMARY KEY NOT NULL,
-    name          VARCHAR(255),
-    gender        VARCHAR(10),
-    photo         BLOB,
-    age           INTEGER,
-    body_type     VARCHAR(10),
-    description   VARCHAR(255),
-    height        INTEGER,
+    id               LONG PRIMARY KEY NOT NULL,
+    google_client_id VARCHAR(255),
+    name             VARCHAR(255),
+    gender           VARCHAR(10),
+    photo            BLOB,
+    age              INTEGER,
+    body_type        VARCHAR(10),
+    description      VARCHAR(255),
+    height           INTEGER,
 
-    filter_gender VARCHAR(10),
-    age_min       INTEGER,
-    age_max       INTEGER,
-    height_min    INTEGER,
-    height_max    INTEGER
+    filter_gender    VARCHAR(10),
+    age_min          INTEGER,
+    age_max          INTEGER,
+    height_min       INTEGER,
+    height_max       INTEGER
 );
 
 CREATE TABLE PERSON_JOIN_TABLE

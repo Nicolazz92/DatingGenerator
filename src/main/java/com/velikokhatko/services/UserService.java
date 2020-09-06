@@ -7,6 +7,10 @@ import com.velikokhatko.view.dto.UserDTO;
 import com.velikokhatko.view.dto.UserMatchSearchingFilterDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +36,11 @@ public class UserService {
         return userRepository.findById(userId).orElse(null);
     }
 
+    public UserDTO getAuthorizedUserDTO() {
+        User authorizedUser = getAuthorizedUser();
+        return conversionService.convert(authorizedUser, UserDTO.class);
+    }
+
     public UserDTO getUserDTOById(Long userId) {
         Optional<User> byId = userRepository.findById(userId);
         return byId.map(user -> conversionService.convert(user, UserDTO.class)).orElse(null);
@@ -43,32 +52,52 @@ public class UserService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public User createOrUpdate(UserDTO dto) {
+    public void createOrUpdate(UserDTO dto) {
+        User authorizedUser = getAuthorizedUser();
+        dto.setId(authorizedUser.getId());
         User user = conversionService.convert(dto, User.class);
-        return userRepository.save(Objects.requireNonNull(user));
+        userRepository.save(Objects.requireNonNull(user));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void delete(Long userId) {
-        userRepository.deleteById(userId);
+    public void delete() {
+        User authorizedUser = getAuthorizedUser();
+        userRepository.deleteById(authorizedUser.getId());
     }
 
-    public UserMatchSearchingFilterDTO getSearchFilterDTOById(Long id) {
-        Optional<User> byId = userRepository.findById(id);
-        return byId.map(user -> conversionService.convert(user.getUserMatchSearchingFilter(), UserMatchSearchingFilterDTO.class)).orElse(null);
+    public UserMatchSearchingFilterDTO getSearchFilterDTO() {
+        User authorizedUser = getAuthorizedUser();
+        return conversionService.convert(authorizedUser.getUserMatchSearchingFilter(), UserMatchSearchingFilterDTO.class);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void update(Long userId, UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
+    public void update(UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
         UserMatchSearchingFilter userMatchSearchingFilter = conversionService.convert(userMatchSearchingFilterDTO, UserMatchSearchingFilter.class);
-        Optional<User> userOptional = userRepository.findById(userId);
+        User authorizedUser = getAuthorizedUser();
+        Optional<User> userOptional = userRepository.findById(authorizedUser.getId());
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setUserMatchSearchingFilter(userMatchSearchingFilter);
             userRepository.save(user);
         } else {
-            throw new EntityExistsException("userId=" + userId);
+            throw new EntityExistsException("userId=" + authorizedUser.getId());
         }
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public User getAuthorizedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        DefaultOAuth2User principal = (DefaultOidcUser) authentication.getPrincipal();
+        String sub = principal.getAttribute("sub");
+
+        Optional<User> byGoogleClientId = userRepository.findByGoogleClientId(sub);
+        if (byGoogleClientId.isPresent()) {
+            return byGoogleClientId.get();
+        } else {
+            User user = new User();
+            user.setName(principal.getAttribute("name"));
+            user.setGoogleClientId(sub);
+            return userRepository.save(user);
+        }
+    }
 }
