@@ -12,10 +12,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeRequests(a -> a
-                        .antMatchers("/", "/error", "/webjars/**").permitAll()
-                        .anyRequest().authenticated()
-                )
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/users/home/**").permitAll()
+                .and()
                 .oauth2Login();
     }
 }

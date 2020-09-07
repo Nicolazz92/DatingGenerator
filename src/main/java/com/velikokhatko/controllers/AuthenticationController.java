@@ -1,6 +1,7 @@
 package com.velikokhatko.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class AuthenticationController {
@@ -10,8 +11,9 @@ public class AuthenticationController {
     public AuthenticationController() {
     }
 
-//    @GetMapping("/login")
-//    public String processCreateOrUpdateUserForm(@ModelAttribute UserDTO userDTO) {
-//        return "redirect:/users/home";
-//    }
+    @GetMapping("/oauth2/authorization/google")
+    public String processCreateOrUpdateUserForm() {
+        return "redirect:/users/home";
+    }
 }
+
