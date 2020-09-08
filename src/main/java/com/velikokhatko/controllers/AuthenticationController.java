@@ -16,4 +16,3 @@ public class AuthenticationController {
         return "redirect:/users/home";
     }
 }
-

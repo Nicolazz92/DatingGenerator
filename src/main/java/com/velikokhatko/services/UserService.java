@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -37,8 +36,10 @@ public class UserService {
     }
 
     public UserDTO getAuthorizedUserDTO() {
-        User authorizedUser = getAuthorizedUser();
-        return conversionService.convert(authorizedUser, UserDTO.class);
+        Optional<User> authorizedUser = getAuthorizedUser();
+        return authorizedUser
+                .map(user -> conversionService.convert(user, UserDTO.class))
+                .orElse(new UserDTO());
     }
 
     public UserDTO getUserDTOById(Long userId) {
@@ -53,51 +54,64 @@ public class UserService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createOrUpdate(UserDTO dto) {
-        User authorizedUser = getAuthorizedUser();
-        dto.setId(authorizedUser.getId());
-        User user = conversionService.convert(dto, User.class);
-        userRepository.save(Objects.requireNonNull(user));
+        Optional<User> authorizedUser = getAuthorizedUser();
+        if (authorizedUser.isPresent()) {
+            dto.setId(authorizedUser.get().getId());
+            User user = conversionService.convert(dto, User.class);
+            userRepository.save(Objects.requireNonNull(user));
+        } else {
+            throw new EntityExistsException("authorized user not found");
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void delete() {
-        User authorizedUser = getAuthorizedUser();
-        userRepository.deleteById(authorizedUser.getId());
+        Optional<User> authorizedUser = getAuthorizedUser();
+        if (authorizedUser.isPresent()) {
+            userRepository.delete(authorizedUser.get());
+        } else {
+            throw new EntityExistsException("authorized user not found");
+        }
     }
 
     public UserMatchSearchingFilterDTO getSearchFilterDTO() {
-        User authorizedUser = getAuthorizedUser();
-        return conversionService.convert(authorizedUser.getUserMatchSearchingFilter(), UserMatchSearchingFilterDTO.class);
+        Optional<User> authorizedUser = getAuthorizedUser();
+        return authorizedUser
+                .map(user -> conversionService.convert(user.getUserMatchSearchingFilter(), UserMatchSearchingFilterDTO.class))
+                .orElse(new UserMatchSearchingFilterDTO());
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void update(UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
         UserMatchSearchingFilter userMatchSearchingFilter = conversionService.convert(userMatchSearchingFilterDTO, UserMatchSearchingFilter.class);
-        User authorizedUser = getAuthorizedUser();
-        Optional<User> userOptional = userRepository.findById(authorizedUser.getId());
+        Optional<User> userOptional = getAuthorizedUser();
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             user.setUserMatchSearchingFilter(userMatchSearchingFilter);
             userRepository.save(user);
         } else {
-            throw new EntityExistsException("userId=" + authorizedUser.getId());
+            throw new EntityExistsException("authorized user not found");
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public User getAuthorizedUser() {
+    public Optional<User> getAuthorizedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        DefaultOAuth2User principal = (DefaultOidcUser) authentication.getPrincipal();
-        String sub = principal.getAttribute("sub");
+        Object principal = authentication.getPrincipal();
+        if ("anonymousUser".equals(principal)) {
+            return Optional.empty();
+        }
+        DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) principal;
+        String sub = defaultOAuth2User.getAttribute("sub");
 
         Optional<User> byGoogleClientId = userRepository.findByGoogleClientId(sub);
         if (byGoogleClientId.isPresent()) {
-            return byGoogleClientId.get();
+            return byGoogleClientId;
         } else {
             User user = new User();
-            user.setName(principal.getAttribute("name"));
+            user.setName(defaultOAuth2User.getAttribute("name"));
             user.setGoogleClientId(sub);
-            return userRepository.save(user);
+            return Optional.of(userRepository.save(user));
         }
     }
 }
