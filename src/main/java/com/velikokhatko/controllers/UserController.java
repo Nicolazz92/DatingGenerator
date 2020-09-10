@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/users")
 public class UserController {
     private static final String USER_HOME = "users/userHome";
+    private static final String USER_VIEW = "users/userView";
     private static final String CREATE_OR_UPDATE_USER = "users/createOrUpdateUser";
     private static final String UPDATE_FILTER = "filters/updateFilter";
 
@@ -28,7 +29,7 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ModelAndView getUserByUserId(@PathVariable Long userId) {
-        ModelAndView mav = new ModelAndView(USER_HOME);
+        ModelAndView mav = new ModelAndView(USER_VIEW);
         mav.addObject("user", userService.getUserDTOById(userId));
         return mav;
     }
