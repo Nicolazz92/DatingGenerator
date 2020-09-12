@@ -17,7 +17,6 @@ import java.util.Set;
 public class User extends BaseEntity {
 
     private String name;
-    private String googleClientId;
     private Gender gender;
     private byte[] photo;
     private Integer age;
@@ -25,6 +24,7 @@ public class User extends BaseEntity {
     private String description;
     private Integer height;
     private UserMatchSearchingFilter userMatchSearchingFilter;
+    private AuthenticationUserProperties authenticationUserProperties;
     private Set<Match> matches = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
@@ -41,15 +41,6 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     public BodyType getBodyType() {
         return bodyType;
-    }
-
-    @Embedded
-    public UserMatchSearchingFilter getUserMatchSearchingFilter() {
-        return userMatchSearchingFilter;
-    }
-
-    public void setUserMatchSearchingFilter(UserMatchSearchingFilter userMatchSearchingFilter) {
-        this.userMatchSearchingFilter = userMatchSearchingFilter;
     }
 
     @ManyToMany(mappedBy = "persons")

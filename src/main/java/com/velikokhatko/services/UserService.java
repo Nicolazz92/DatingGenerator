@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,17 +100,8 @@ public class UserService {
         if ("anonymousUser".equals(principal)) {
             return Optional.empty();
         }
-        DefaultOAuth2User defaultOAuth2User = (DefaultOAuth2User) principal;
-        String sub = defaultOAuth2User.getAttribute("sub");
-
-        Optional<User> byGoogleClientId = userRepository.findByGoogleClientId(sub);
-        if (byGoogleClientId.isPresent()) {
-            return byGoogleClientId;
-        } else {
-            User user = new User();
-            user.setName(defaultOAuth2User.getAttribute("name"));
-            user.setGoogleClientId(sub);
-            return Optional.of(userRepository.save(user));
-        }
+        org.springframework.security.core.userdetails.User authenticatedUser = (org.springframework.security.core.userdetails.User) principal;
+        String username = authenticatedUser.getUsername();
+        return userRepository.findByAuthenticationUserPropertiesUsername(username);
     }
 }
