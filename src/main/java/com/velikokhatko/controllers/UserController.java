@@ -16,6 +16,10 @@ public class UserController {
     private static final String CREATE_OR_UPDATE_USER = "users/createOrUpdateUser";
     private static final String UPDATE_FILTER = "filters/updateFilter";
 
+    private static final String REDIRECT_TO_LOGIN = "redirect:/login";
+    private static final String REDIRECT_TO_HOME = "redirect:/users/home";
+    private static final String REDIRECT_TO_LOGOUT = "redirect:/logout";
+
     private final UserService userService;
 
     public UserController(UserService userService) {
@@ -44,7 +48,7 @@ public class UserController {
             mav.addObject("user", authorizedUserDTO);
             mav.addObject("hasLoggedUser", true);
         } else {
-            mav = new ModelAndView("redirect:/login");
+            mav = new ModelAndView(REDIRECT_TO_LOGIN);
         }
         return mav;
     }
@@ -59,13 +63,13 @@ public class UserController {
     @PostMapping("/home/edit")
     public String processCreateOrUpdateUserForm(@ModelAttribute UserDTO userDTO) {
         userService.createOrUpdate(userDTO);
-        return "redirect:/users/home";
+        return REDIRECT_TO_HOME;
     }
 
     @PostMapping("/home/delete")
     public String processDelete() {
         userService.delete();
-        return "redirect:/";
+        return REDIRECT_TO_LOGOUT;
     }
 
     @GetMapping("/home/filter/edit")
@@ -78,6 +82,6 @@ public class UserController {
     @PostMapping("/home/filter/edit")
     public String processUpdateFilterForm(@ModelAttribute UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
         userService.update(userMatchSearchingFilterDTO);
-        return "redirect:/users/home";
+        return REDIRECT_TO_HOME;
     }
 }
