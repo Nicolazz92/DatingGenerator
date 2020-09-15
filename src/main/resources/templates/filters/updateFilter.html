@@ -4,17 +4,17 @@
     <h2>Edit filter</h2>
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/inputDropDownEnum :: input ('Gender', 'gender', ${T(com.velikokhatko.model.enums.Gender).values()})}"/>
-        <input th:replace="~{fragments/inputNumberField :: input ('Minimum Age', 'ageMin')}"/>
-        <input th:replace="~{fragments/inputNumberField :: input ('Maximum Age', 'ageMax')}"/>
-        <input th:replace="~{fragments/inputNumberField :: input ('Minimum Height', 'heightMin')}"/>
-        <input th:replace="~{fragments/inputNumberField :: input ('Maximum Height', 'heightMax')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Minimum Age', 'ageMin', 'number')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Maximum Age', 'ageMax', 'number')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Minimum Height', 'heightMin', 'number')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Maximum Height', 'heightMax', 'number')}"/>
 
         <br>
         <div th:text="|Body types setting|"></div>
-        <input th:replace="~{fragments/inputCheckbox :: input ('Thin', 'findThin')}"/>
-        <input th:replace="~{fragments/inputCheckbox :: input ('Average', 'findAverage')}"/>
-        <input th:replace="~{fragments/inputCheckbox :: input ('Fat', 'findFat')}"/>
-        <input th:replace="~{fragments/inputCheckbox :: input ('Athletic', 'findAthletic')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Thin', 'findThin', 'checkbox')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Average', 'findAverage', 'checkbox')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Fat', 'findFat', 'checkbox')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Athletic', 'findAthletic', 'checkbox')}"/>
     </div>
     <div class="form-group">
         <br>

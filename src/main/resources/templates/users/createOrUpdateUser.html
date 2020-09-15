@@ -5,15 +5,15 @@
     <img style="height:200px" th:unless="${user.image64 == null}"
          th:src="@{'data:image/jpeg;base64,' + ${user.image64}}">
     <div class="form-group has-feedback">
-        <input th:replace="~{fragments/inputTextField :: input ('Name', 'name')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Name', 'name', 'text')}"/>
         <input th:replace="~{fragments/inputDropDownEnum :: input ('Gender', 'gender', ${T(com.velikokhatko.model.enums.Gender).values()})}"/>
-        <input th:replace="~{fragments/inputImageField :: input ('Photo', 'photo')}"/>
-        <input th:replace="~{fragments/inputNumberField :: input ('Age', 'age')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Photo', 'photo', 'file')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Age', 'age', 'number')}"/>
         <input th:replace="~{fragments/inputDropDownEnum :: input ('Body type', 'bodyType', ${T(com.velikokhatko.model.enums.BodyType).values()})}"/>
-        <input th:replace="~{fragments/inputTextField :: input ('Description', 'description')}"/>
-        <input th:replace="~{fragments/inputNumberField :: input ('Height', 'height')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Description', 'description', 'text')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('Height', 'height', 'number')}"/>
         <br>
-        <input th:replace="~{fragments/inputPasswordField :: input ('New Password', 'password')}"/>
+        <input th:replace="~{fragments/inputFieldWithType :: input ('New Password', 'password', 'password')}"/>
     </div>
     <div class="form-group">
         <br>
