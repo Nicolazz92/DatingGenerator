@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 
+import static com.velikokhatko.services.UserService.INSERT_AUTHORITIES;
+
 @Component
 @Transactional
 public class InitDataLoader implements CommandLineRunner {
@@ -67,9 +69,7 @@ public class InitDataLoader implements CommandLineRunner {
 
         userRepository.save(kate);
 
-        jdbcTemplate.execute("insert into AUTHORITIES(USERNAME, AUTHORITY) values ('"
-                + kate.getAuthenticationUserProperties().getUsername()
-                + "',  'ROLE_USER')");
+        jdbcTemplate.execute(INSERT_AUTHORITIES.replace("%username%", kate.getAuthenticationUserProperties().getUsername()));
     }
 
     public byte[] getBytes(String picturePath) throws IOException {

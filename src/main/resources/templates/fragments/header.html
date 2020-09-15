@@ -9,6 +9,7 @@
     <table>
         <tr>
             <td th:unless="${hasLoggedUser}"><a href="/login">Login</a></td>
+            <td th:unless="${hasLoggedUser}"><a href="/users/register">Register</a></td>
             <td><a href="/users/home">Home</a></td>
         </tr>
     </table>

@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/users/**", "/h2-console/**").permitAll()
+                .antMatchers("/users/**", "/h2-console/**", "/register/**").permitAll()
                 .antMatchers("/users/home**").authenticated()
                 .and()
                 .formLogin().defaultSuccessUrl("/users/home", true);

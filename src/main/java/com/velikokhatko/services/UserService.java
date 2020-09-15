@@ -7,6 +7,7 @@ import com.velikokhatko.view.dto.UserDTO;
 import com.velikokhatko.view.dto.UserMatchSearchingFilterDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,14 +20,18 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+    public static final String INSERT_AUTHORITIES = "insert into AUTHORITIES(USERNAME, AUTHORITY) values ('%username%',  'ROLE_USER')";
 
     private final UserRepository userRepository;
     private final ConversionService conversionService;
+    private final JdbcTemplate jdbcTemplate;
 
     public UserService(UserRepository userRepository,
-                       @Qualifier("dtoConverter") ConversionService conversionService) {
+                       @Qualifier("dtoConverter") ConversionService conversionService,
+                       JdbcTemplate jdbcTemplate) {
         this.userRepository = userRepository;
         this.conversionService = conversionService;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Transactional(readOnly = true)
@@ -52,7 +57,7 @@ public class UserService {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void createOrUpdate(UserDTO dto) {
+    public void update(UserDTO dto) {
         Optional<User> authorizedUser = getAuthorizedUser();
         if (authorizedUser.isPresent()) {
             dto.setId(authorizedUser.get().getId());
@@ -60,6 +65,18 @@ public class UserService {
             userRepository.save(Objects.requireNonNull(user));
         } else {
             throw new EntityExistsException("authorized user not found");
+        }
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void create(UserDTO dto) {
+        Optional<User> authorizedUser = getAuthorizedUser();
+        if (authorizedUser.isPresent()) {
+            throw new EntityExistsException("already authorized");
+        } else {
+            User user = conversionService.convert(dto, User.class);
+            User savedNewUser = userRepository.save(Objects.requireNonNull(user));
+            jdbcTemplate.execute(INSERT_AUTHORITIES.replace("%username%", savedNewUser.getAuthenticationUserProperties().getUsername()));
         }
     }
 

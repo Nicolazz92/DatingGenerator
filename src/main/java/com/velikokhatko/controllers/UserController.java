@@ -16,6 +16,8 @@ public class UserController {
     private static final String UPDATE_USER = "users/updateUser";
     private static final String UPDATE_FILTER = "filters/updateFilter";
 
+    private static final String CREATE_USER = "users/createUser";
+
     private static final String REDIRECT_TO_LOGIN = "redirect:/login";
     private static final String REDIRECT_TO_HOME = "redirect:/users/home";
     private static final String REDIRECT_TO_LOGOUT = "redirect:/logout";
@@ -54,15 +56,15 @@ public class UserController {
     }
 
     @GetMapping("/home/edit")
-    public ModelAndView initCreateOrUpdateUserForm() {
+    public ModelAndView initUpdateUserForm() {
         ModelAndView mav = new ModelAndView(UPDATE_USER);
         mav.addObject("user", userService.getAuthorizedUserDTO());
         return mav;
     }
 
     @PostMapping("/home/edit")
-    public String processCreateOrUpdateUserForm(@ModelAttribute UserDTO userDTO) {
-        userService.createOrUpdate(userDTO);
+    public String processUpdateUserForm(@ModelAttribute UserDTO userDTO) {
+        userService.update(userDTO);
         return REDIRECT_TO_HOME;
     }
 
@@ -82,6 +84,19 @@ public class UserController {
     @PostMapping("/home/filter/edit")
     public String processUpdateFilterForm(@ModelAttribute UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
         userService.update(userMatchSearchingFilterDTO);
+        return REDIRECT_TO_HOME;
+    }
+
+    @GetMapping("/register")
+    public ModelAndView initCreateUserForm() {
+        ModelAndView mav = new ModelAndView(CREATE_USER);
+        mav.addObject("user", new UserDTO());
+        return mav;
+    }
+
+    @PostMapping("/register")
+    public String processCreateUserForm(UserDTO dto) {
+        userService.create(dto);
         return REDIRECT_TO_HOME;
     }
 }

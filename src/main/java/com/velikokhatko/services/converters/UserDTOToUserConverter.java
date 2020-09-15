@@ -57,6 +57,11 @@ public class UserDTOToUserConverter implements Converter<UserDTO, User> {
             } else {
                 user.getAuthenticationUserProperties().setPassword(passwordEncoder.encode(dto.getPassword()));
             }
+            if (Strings.isBlank(dto.getUsername())) {
+                throw new RuntimeException("Empty Username");
+            } else {
+                user.getAuthenticationUserProperties().setUsername(dto.getUsername());
+            }
         }
         return user;
     }
