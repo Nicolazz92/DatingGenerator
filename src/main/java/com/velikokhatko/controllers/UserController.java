@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
     private static final String USER_HOME = "users/userHome";
     private static final String USER_VIEW = "users/userView";
-    private static final String CREATE_OR_UPDATE_USER = "users/createOrUpdateUser";
+    private static final String UPDATE_USER = "users/updateUser";
     private static final String UPDATE_FILTER = "filters/updateFilter";
 
     private static final String REDIRECT_TO_LOGIN = "redirect:/login";
@@ -55,7 +55,7 @@ public class UserController {
 
     @GetMapping("/home/edit")
     public ModelAndView initCreateOrUpdateUserForm() {
-        ModelAndView mav = new ModelAndView(CREATE_OR_UPDATE_USER);
+        ModelAndView mav = new ModelAndView(UPDATE_USER);
         mav.addObject("user", userService.getAuthorizedUserDTO());
         return mav;
     }
