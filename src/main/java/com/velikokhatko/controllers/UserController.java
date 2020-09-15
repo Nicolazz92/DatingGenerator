@@ -31,13 +31,21 @@ public class UserController {
     public ModelAndView getUserByUserId(@PathVariable Long userId) {
         ModelAndView mav = new ModelAndView(USER_VIEW);
         mav.addObject("user", userService.getUserDTOById(userId));
+        mav.addObject("hasLoggedUser", userService.getAuthorizedUser().isPresent());
         return mav;
     }
 
     @GetMapping("/home")
     public ModelAndView getUserHome() {
-        ModelAndView mav = new ModelAndView(USER_HOME);
-        mav.addObject("user", userService.getAuthorizedUserDTO());
+        UserDTO authorizedUserDTO = userService.getAuthorizedUserDTO();
+        ModelAndView mav;
+        if (authorizedUserDTO != null) {
+            mav = new ModelAndView(USER_HOME);
+            mav.addObject("user", authorizedUserDTO);
+            mav.addObject("hasLoggedUser", true);
+        } else {
+            mav = new ModelAndView("redirect:/login");
+        }
         return mav;
     }
 

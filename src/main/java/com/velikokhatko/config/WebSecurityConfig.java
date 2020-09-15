@@ -25,9 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/users/**", "/h2-console/**").permitAll()
                 .antMatchers("/users/home**").authenticated()
-//                .anyRequest().authenticated()
                 .and()
-                .formLogin();
+                .formLogin().defaultSuccessUrl("/users/home", true);
     }
 
     @Autowired

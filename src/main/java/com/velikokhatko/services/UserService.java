@@ -38,7 +38,7 @@ public class UserService {
         Optional<User> authorizedUser = getAuthorizedUser();
         return authorizedUser
                 .map(user -> conversionService.convert(user, UserDTO.class))
-                .orElse(new UserDTO());
+                .orElse(null);
     }
 
     public UserDTO getUserDTOById(Long userId) {

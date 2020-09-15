@@ -9,6 +9,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 
+<div th:replace="fragments/header :: header"></div>
+
 <h1><span th:text="*{name}">username</span></h1>
 
 <div>
@@ -20,5 +22,8 @@
     <p th:unless="${user.height == null}">Height: <span th:text="*{height}">height</span></p>
     <p th:unless="${user.description == null}">Description: <span th:text="*{description}">description</span></p>
 </div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>

@@ -9,10 +9,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 
+<div th:replace="fragments/header :: header"></div>
+
 <h1><span th:text="*{name}">username</span></h1>
-<form method="POST" th:action="@{/logout}">
-    <button type="submit" name="submit" value="value" class="link-button">Logout</button>
-</form>
 
 <div>
     <img style="height:200px" th:unless="${user.image64 == null}"
@@ -43,6 +42,8 @@
     </tr>
     </br>
 </h3>
+
+<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>

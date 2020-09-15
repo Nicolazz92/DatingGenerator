@@ -49,7 +49,7 @@ public class InitDataLoader implements CommandLineRunner {
 
         AuthenticationUserProperties kateAuthProps = AuthenticationUserProperties.builder()
                 .username("kate")
-                .password(passwordEncoder.encode("password"))
+                .password(passwordEncoder.encode("pass"))
                 .enabled(true)
                 .build();
 
