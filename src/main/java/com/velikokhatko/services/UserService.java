@@ -48,7 +48,8 @@ public class UserService {
 
     public UserDTO getUserDTOById(Long userId) {
         Optional<User> byId = userRepository.findById(userId);
-        return byId.map(user -> conversionService.convert(user, UserDTO.class)).orElse(null);
+        return byId.map(user -> conversionService.convert(user, UserDTO.class))
+                .orElseThrow(() -> new EntityExistsException("User not exists with id=" + userId));
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

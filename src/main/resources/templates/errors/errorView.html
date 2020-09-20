@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="|Ooops...|">header</title>
+    <meta charset="utf-8">
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<h3><span th:text="${httpStatus}">exceptionMessage</span></h3>
+<h4><span th:text="${devMessage}">devMessage</span></h4>
+
+</body>
+</html>
