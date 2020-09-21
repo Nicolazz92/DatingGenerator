@@ -4,9 +4,13 @@ import com.velikokhatko.services.UserService;
 import com.velikokhatko.view.dto.UserDTO;
 import com.velikokhatko.view.dto.UserMatchSearchingFilterDTO;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 @Controller
 @RequestMapping("/users")
@@ -82,7 +86,11 @@ public class UserController {
     }
 
     @PostMapping("/home/filter/edit")
-    public String processUpdateFilterForm(@ModelAttribute UserMatchSearchingFilterDTO userMatchSearchingFilterDTO) {
+    public String processUpdateFilterForm(@ModelAttribute @Valid UserMatchSearchingFilterDTO userMatchSearchingFilterDTO,
+                                          BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(bindingResult.toString());
+        }
         userService.update(userMatchSearchingFilterDTO);
         return REDIRECT_TO_HOME;
     }
