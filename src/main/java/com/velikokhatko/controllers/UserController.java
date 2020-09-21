@@ -3,6 +3,8 @@ package com.velikokhatko.controllers;
 import com.velikokhatko.services.UserService;
 import com.velikokhatko.view.dto.UserDTO;
 import com.velikokhatko.view.dto.UserMatchSearchingFilterDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -15,6 +17,8 @@ import javax.validation.ValidationException;
 @Controller
 @RequestMapping("/users")
 public class UserController {
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     private static final String USER_HOME = "users/userHome";
     private static final String USER_VIEW = "users/userView";
     private static final String UPDATE_USER = "users/updateUser";
@@ -67,7 +71,12 @@ public class UserController {
     }
 
     @PostMapping("/home/edit")
-    public String processUpdateUserForm(@ModelAttribute UserDTO userDTO) {
+    public String processUpdateUserForm(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
+                            fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
+            throw new ValidationException(bindingResult.toString());
+        }
         userService.update(userDTO);
         return REDIRECT_TO_HOME;
     }
@@ -89,6 +98,8 @@ public class UserController {
     public String processUpdateFilterForm(@ModelAttribute @Valid UserMatchSearchingFilterDTO userMatchSearchingFilterDTO,
                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
+                    fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
             throw new ValidationException(bindingResult.toString());
         }
         userService.update(userMatchSearchingFilterDTO);

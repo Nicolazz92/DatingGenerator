@@ -1,6 +1,5 @@
 package com.velikokhatko.exceptions;
 
-import com.velikokhatko.model.Match;
 import com.velikokhatko.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +11,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.exceptions.TemplateInputException;
 
 import javax.persistence.EntityExistsException;
+import javax.validation.ValidationException;
 
 @ControllerAdvice
 public class ExceptionHandler {
-    private static final Logger logger = LoggerFactory.getLogger(Match.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandler.class);
     private final UserService userService;
 
     public ExceptionHandler(UserService userService) {
@@ -39,6 +39,13 @@ public class ExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @org.springframework.web.bind.annotation.ExceptionHandler(EntityExistsException.class)
     public ModelAndView handlePageNotFound(Exception exception) {
+        logger.error(exception.getMessage());
+        return getErrorModelAndView(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @org.springframework.web.bind.annotation.ExceptionHandler(ValidationException.class)
+    public ModelAndView handleValidationException(ValidationException exception) {
         logger.error(exception.getMessage());
         return getErrorModelAndView(exception, HttpStatus.BAD_REQUEST);
     }

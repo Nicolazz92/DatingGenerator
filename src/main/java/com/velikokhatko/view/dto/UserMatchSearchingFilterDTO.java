@@ -2,8 +2,8 @@ package com.velikokhatko.view.dto;
 
 import com.velikokhatko.model.enums.Gender;
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -15,17 +15,13 @@ import javax.validation.constraints.NotNull;
 public class UserMatchSearchingFilterDTO {
     @NotNull
     private Gender gender;
-    @Max(99)
     @Min(18)
     private Integer ageMin;
-    @Max(99)
     @Min(18)
     private Integer ageMax;
-    @Max(250)
-    @Min(130)
+    @Range(min = 100, max = 300)
     private Integer heightMin;
-    @Max(250)
-    @Min(100)
+    @Range(min = 100, max = 300)
     private Integer heightMax;
 
     private boolean findThin;

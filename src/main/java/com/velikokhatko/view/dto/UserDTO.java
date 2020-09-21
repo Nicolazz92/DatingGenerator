@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
@@ -22,16 +22,13 @@ public class UserDTO {
     private String name;
     private Gender gender;
     private MultipartFile photo;
-    @Max(99)
     @Min(18)
     private Integer age;
     private BodyType bodyType;
     private String description;
-    @Max(250)
-    @Min(130)
+    @Range(min = 100, max = 300)
     private Integer height;
 
-    @NotBlank
     private String username;
     private String password;
 
