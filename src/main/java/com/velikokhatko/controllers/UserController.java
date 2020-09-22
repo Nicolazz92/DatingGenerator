@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 
 @Controller
 @RequestMapping("/users")
@@ -71,14 +70,17 @@ public class UserController {
     }
 
     @PostMapping("/home/edit")
-    public String processUpdateUserForm(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult) {
+    public ModelAndView processUpdateUserForm(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
-                            fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
-            throw new ValidationException(bindingResult.toString());
+                    fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
+
+            ModelAndView mav = new ModelAndView(UPDATE_USER);
+            mav.addObject("user", userDTO);
+            return mav;
         }
         userService.update(userDTO);
-        return REDIRECT_TO_HOME;
+        return new ModelAndView(REDIRECT_TO_HOME);
     }
 
     @PostMapping("/home/delete")
@@ -95,15 +97,18 @@ public class UserController {
     }
 
     @PostMapping("/home/filter/edit")
-    public String processUpdateFilterForm(@ModelAttribute @Valid UserMatchSearchingFilterDTO userMatchSearchingFilterDTO,
+    public ModelAndView processUpdateFilterForm(@ModelAttribute @Valid UserMatchSearchingFilterDTO userMatchSearchingFilterDTO,
                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
                     fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
-            throw new ValidationException(bindingResult.toString());
+
+            ModelAndView mav = new ModelAndView(UPDATE_FILTER);
+            mav.addObject("filter", userMatchSearchingFilterDTO);
+            return mav;
         }
         userService.update(userMatchSearchingFilterDTO);
-        return REDIRECT_TO_HOME;
+        return new ModelAndView(REDIRECT_TO_HOME);
     }
 
     @GetMapping("/register")

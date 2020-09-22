@@ -2,14 +2,14 @@
 <body>
 <form>
     <th:block th:fragment="input (label, name, type)">
-        <div class="col-md-3 form-group" th:class="${#fields.hasErrors(*{__${name}__})}
+        <div class="col-md-3 form-group" th:class="${#fields.hasErrors('__${name}__')}
                                 ? 'col-md-3 form-group has-error' : 'col-md-3 form-group'">
             <label class="col-sm-2 control-label" th:text="${label}">Label</label>
             <div class="col-sm-10">
                 <input class="form-control" th:type="${type}" th:field="*{__${name}__}"/>
-                <span class="help-block" th:if="${#fields.hasErrors(*{__${name}__})}">
+                <span class="help-block" th:if="${#fields.hasErrors('__${name}__')}">
                     <ul>
-                        <li th:each="err : ${#fields.errors(*{__${name}__})}" th:text="${err}"/>
+                        <li th:each="err : ${#fields.errors('__${name}__')}" th:text="${err}"/>
                     </ul>
                 </span>
             </div>
