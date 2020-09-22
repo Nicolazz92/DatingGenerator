@@ -54,7 +54,8 @@ public class ExceptionHandler {
     @org.springframework.web.bind.annotation.ExceptionHandler({
             NullPointerException.class,
             TemplateInputException.class,
-            HttpMediaTypeNotSupportedException.class})
+            HttpMediaTypeNotSupportedException.class,
+            IllegalStateException.class})
     public ModelAndView handle500(Exception exception) {
         logger.error(exception.getMessage());
         return getErrorModelAndView(exception, HttpStatus.INTERNAL_SERVER_ERROR);

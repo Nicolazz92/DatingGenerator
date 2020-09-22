@@ -77,6 +77,7 @@ public class UserController {
 
             ModelAndView mav = new ModelAndView(UPDATE_USER);
             mav.addObject("user", userDTO);
+//            mav.addAllObjects();//TODO вытянуть из bindingResult результат проверки
             return mav;
         }
         userService.update(userDTO);
@@ -103,8 +104,8 @@ public class UserController {
             bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
                     fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
 
-            ModelAndView mav = new ModelAndView(UPDATE_FILTER);
-            mav.addObject("filter", userMatchSearchingFilterDTO);
+            ModelAndView mav = new ModelAndView(UPDATE_FILTER, bindingResult.getModel());
+//            mav.addObject("filter", userMatchSearchingFilterDTO);
             return mav;
         }
         userService.update(userMatchSearchingFilterDTO);
