@@ -22,7 +22,6 @@ public class UserDTO {
     private Gender gender;
     private MultipartFile photo;
     @Range(min = 18, max = 120)
-    @NotBlank
     private Integer age;
     private BodyType bodyType;
     private String description;
