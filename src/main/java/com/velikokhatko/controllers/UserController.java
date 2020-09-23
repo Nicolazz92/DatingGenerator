@@ -72,8 +72,7 @@ public class UserController {
     @PostMapping("/home/edit")
     public ModelAndView processUpdateUserForm(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
-                    fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
+            logErrors(bindingResult);
             return new ModelAndView(UPDATE_USER, bindingResult.getModel());
         }
         userService.update(userDTO);
@@ -97,8 +96,7 @@ public class UserController {
     public ModelAndView processUpdateFilterForm(@ModelAttribute @Valid UserMatchSearchingFilterDTO userMatchSearchingFilterDTO,
                                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
-                    fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
+            logErrors(bindingResult);
             return new ModelAndView(UPDATE_FILTER, bindingResult.getModel());
         }
         userService.update(userMatchSearchingFilterDTO);
@@ -113,8 +111,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String processCreateUserForm(UserDTO userDTO) {
+    public ModelAndView processCreateUserForm(@ModelAttribute @Valid UserDTO userDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            logErrors(bindingResult);
+            return new ModelAndView(CREATE_USER, bindingResult.getModel());
+        }
         userService.create(userDTO);
-        return REDIRECT_TO_HOME;
+        return new ModelAndView(REDIRECT_TO_HOME);
+    }
+
+    private void logErrors(BindingResult bindingResult) {
+        bindingResult.getFieldErrors().forEach(fe -> logger.error("object='{}', field='{}', rejectedValue='{}' message='{}'",
+                bindingResult.getObjectName(), fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
     }
 }
