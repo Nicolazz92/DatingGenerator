@@ -1,9 +1,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<form th:object="${user}" class="form-horizontal" id="add-owner-form" method="post" enctype="multipart/form-data">
+<form th:object="${userDTO}" class="form-horizontal" id="add-owner-form" method="post" enctype="multipart/form-data">
     <h2>Edit User</h2>
-<!--    <img style="height:200px" th:unless="${user.image64 == null}"-->
-<!--         th:src="@{'data:image/jpeg;base64,' + ${user.image64}}">-->
+    <img style="height:200px" th:unless="${userDTO.image64 == null}"
+         th:src="@{'data:image/jpeg;base64,' + ${userDTO.image64}}">
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/inputFieldWithType :: input ('Name', 'name', 'text')}"/>
         <input th:replace="~{fragments/inputDropDownEnum :: input ('Gender', 'gender', ${T(com.velikokhatko.model.enums.Gender).values()})}"/>

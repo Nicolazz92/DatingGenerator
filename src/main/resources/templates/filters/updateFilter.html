@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<form th:object="${filter}" method="post">
+<form th:object="${userMatchSearchingFilterDTO}" method="post">
     <h2>Edit filter</h2>
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/inputDropDownEnum :: input ('Gender', 'gender', ${T(com.velikokhatko.model.enums.Gender).values()})}"/>

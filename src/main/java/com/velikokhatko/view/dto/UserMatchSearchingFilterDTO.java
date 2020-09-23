@@ -4,7 +4,7 @@ import com.velikokhatko.model.enums.Gender;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
 
-import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -15,9 +15,11 @@ import javax.validation.constraints.NotNull;
 public class UserMatchSearchingFilterDTO {
     @NotNull
     private Gender gender;
-    @Min(18)
+    @Range(min = 18, max = 120)
+    @NotBlank
     private Integer ageMin;
-    @Min(18)
+    @Range(min = 18, max = 120)
+    @NotBlank
     private Integer ageMax;
     @Range(min = 100, max = 300)
     private Integer heightMin;

@@ -65,7 +65,7 @@ public class UserController {
     @GetMapping("/home/edit")
     public ModelAndView initUpdateUserForm() {
         ModelAndView mav = new ModelAndView(UPDATE_USER);
-        mav.addObject("user", userService.getAuthorizedUserDTO());
+        mav.addObject("userDTO", userService.getAuthorizedUserDTO());
         return mav;
     }
 
@@ -74,11 +74,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
                     fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
-
-            ModelAndView mav = new ModelAndView(UPDATE_USER);
-            mav.addObject("user", userDTO);
-//            mav.addAllObjects();//TODO вытянуть из bindingResult результат проверки
-            return mav;
+            return new ModelAndView(UPDATE_USER, bindingResult.getModel());
         }
         userService.update(userDTO);
         return new ModelAndView(REDIRECT_TO_HOME);
@@ -93,7 +89,7 @@ public class UserController {
     @GetMapping("/home/filter/edit")
     public ModelAndView initUpdateFilterForm() {
         ModelAndView mav = new ModelAndView(UPDATE_FILTER);
-        mav.addObject("filter", userService.getSearchFilterDTO());
+        mav.addObject("userMatchSearchingFilterDTO", userService.getSearchFilterDTO());
         return mav;
     }
 
@@ -103,10 +99,7 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             bindingResult.getFieldErrors().forEach(fe -> logger.error("field='{}', rejectedValue='{}' message='{}'",
                     fe.getField(), fe.getRejectedValue(), fe.getDefaultMessage()));
-
-            ModelAndView mav = new ModelAndView(UPDATE_FILTER, bindingResult.getModel());
-//            mav.addObject("filter", userMatchSearchingFilterDTO);
-            return mav;
+            return new ModelAndView(UPDATE_FILTER, bindingResult.getModel());
         }
         userService.update(userMatchSearchingFilterDTO);
         return new ModelAndView(REDIRECT_TO_HOME);
@@ -115,13 +108,13 @@ public class UserController {
     @GetMapping("/register")
     public ModelAndView initCreateUserForm() {
         ModelAndView mav = new ModelAndView(CREATE_USER);
-        mav.addObject("user", new UserDTO());
+        mav.addObject("userDTO", new UserDTO());
         return mav;
     }
 
     @PostMapping("/register")
-    public String processCreateUserForm(UserDTO dto) {
-        userService.create(dto);
+    public String processCreateUserForm(UserDTO userDTO) {
+        userService.create(userDTO);
         return REDIRECT_TO_HOME;
     }
 }
