@@ -9,7 +9,7 @@
 
     <groupId>com.velikokhatko</groupId>
     <artifactId>DatingGenerator</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
 
     <name>Dating Generator</name>
